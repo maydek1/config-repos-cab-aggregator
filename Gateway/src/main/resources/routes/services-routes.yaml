@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: driver-service
+          uri: lb://DriverEurekaClient
+          predicates:
+            - Path=/api/v1/drivers
+        - id: car-service
+          uri: lb://CarEurekaClient
+          predicates:
+            - Path=/api/v1/cars
+        - id: passenger-service
+          uri: lb://PassengerEurekaClient
+          predicates:
+            - Path=/api/v1/passengers
+        - id: ride-service
+          uri: lb://RideEurekaClient
+          predicates:
+            - Path=/api/v1/ride
+        - id: rating-service
+          uri: lb://RatingEurekaClient
+          predicates:
+            - Path=/api/v1/ratings/**
