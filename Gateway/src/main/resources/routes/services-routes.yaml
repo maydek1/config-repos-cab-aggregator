@@ -3,22 +3,22 @@ spring:
     gateway:
       routes:
         - id: driver-service
-          uri: lb://DriverEurekaClient
+          uri: lb://DriverService
           predicates:
-            - Path=/api/v1/drivers
+            - Path=/api/v1/drivers/**
         - id: car-service
-          uri: lb://CarEurekaClient
+          uri: lb://CarStationService
           predicates:
-            - Path=/api/v1/cars
+            - Path=/api/v1/cars/**
         - id: passenger-service
-          uri: lb://PassengerEurekaClient
+          uri: lb://PassengerService
           predicates:
-            - Path=/api/v1/passengers
+            - Path=/api/v1/passenger/**
         - id: ride-service
-          uri: lb://RideEurekaClient
+          uri: lb://RideService
           predicates:
-            - Path=/api/v1/ride
+            - Path=/api/v1/ride/**
         - id: rating-service
-          uri: lb://RatingEurekaClient
+          uri: lb://RatingService
           predicates:
             - Path=/api/v1/ratings/**

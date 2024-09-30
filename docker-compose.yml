@@ -1,0 +1,130 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: ridedb
+    ports:
+      - "5432:5432"
+    networks:
+      - cab-aggregator
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    networks:
+      - cab-aggregator
+
+  car-service:
+    image: car-service
+    container_name: car-service
+    ports:
+      - "4560:4560"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/cardb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_PROFILES_ACTIVE: "prod"
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+  driver-service:
+    image: driver-service
+    container_name: driver-service
+    ports:
+      - "4567:4567"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/driverdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_PROFILES_ACTIVE: "prod"
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+  passenger-service:
+    image: passenger-service
+    container_name: passenger-service
+    ports:
+      - "4566:4566"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/passengerdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_PROFILES_ACTIVE: "prod"
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+  ride-service:
+    image: ride-service
+    container_name: ride-service
+    ports:
+      - "4568:4568"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/ridedb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_PROFILES_ACTIVE: "prod"
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+  rating-service:
+    image: rating-service
+    container_name: rating-service
+    ports:
+      - "4569:4569"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/ratingdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 123
+      SPRING_PROFILES_ACTIVE: "prod"
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+  eureka:
+    image: eureka
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - cab-aggregator
+
+  gateway:
+    image: gateway
+    container_name: gateway
+    ports:
+      - "8088:8088"
+    environment:
+      EUREKA_CLIENT_SERVICE_URL: http://eureka:8761/eureka/
+    depends_on:
+      - eureka
+    networks:
+      - cab-aggregator
+
+networks:
+  cab-aggregator:
+    driver: bridge
