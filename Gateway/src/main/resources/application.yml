@@ -1,1 +1,14 @@
-spring.application.name=Gateway
+spring:
+  application:
+    name: ApiGateWayService
+  config:
+    import:
+      - classpath:routes/services-routes.yaml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:8761/eureka/
+
+server:
+  port: 8088
