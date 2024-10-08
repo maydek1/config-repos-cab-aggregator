@@ -125,6 +125,28 @@ services:
     networks:
       - cab-aggregator
 
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - cab-aggregator
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    networks:
+      - cab-aggregator
+    depends_on:
+      - prometheus
+
 networks:
   cab-aggregator:
     driver: bridge
