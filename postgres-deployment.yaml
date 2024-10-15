@@ -1,9 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: C:\Windows\system32\kompose.exe convert
-    kompose.version: 1.34.0 (cbf2835db)
   labels:
     io.kompose.service: postgres
   name: postgres
@@ -14,9 +11,6 @@ spec:
       io.kompose.service: postgres
   template:
     metadata:
-      annotations:
-        kompose.cmd: C:\Windows\system32\kompose.exe convert
-        kompose.version: 1.34.0 (cbf2835db)
       labels:
         io.kompose.service: postgres
     spec:
