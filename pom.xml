@@ -4,6 +4,21 @@
   <groupId>org.example</groupId>
   <artifactId>config-repos-cab-aggregator</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
   <name>Archetype - config-repos-cab-aggregator</name>
   <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-test</artifactId>
+      <version>3.3.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-autoconfigure</artifactId>
+      <version>3.3.4</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
 </project>

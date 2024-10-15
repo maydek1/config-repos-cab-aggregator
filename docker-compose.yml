@@ -3,7 +3,7 @@ version: "3.7"
 services:
   postgres:
     image: postgres:latest
-    container_name: my_postgres
+    container_name: postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123
@@ -26,12 +26,12 @@ services:
       - cab-aggregator
 
   car-service:
-    image: car-service
+    image: maydek/car-service
     container_name: car-service
     ports:
       - "4560:4560"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/cardb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/cardb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: "prod"
@@ -42,12 +42,12 @@ services:
       - cab-aggregator
 
   driver-service:
-    image: driver-service
+    image: maydek/driver-service
     container_name: driver-service
     ports:
       - "4567:4567"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/driverdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/driverdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: "prod"
@@ -58,12 +58,12 @@ services:
       - cab-aggregator
 
   passenger-service:
-    image: passenger-service
+    image: maydek/passenger-service
     container_name: passenger-service
     ports:
       - "4566:4566"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/passengerdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/passengerdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: "prod"
@@ -74,12 +74,12 @@ services:
       - cab-aggregator
 
   ride-service:
-    image: ride-service
+    image: maydek/ride-service
     container_name: ride-service
     ports:
       - "4568:4568"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/ridedb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ridedb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: "prod"
@@ -90,12 +90,12 @@ services:
       - cab-aggregator
 
   rating-service:
-    image: rating-service
+    image: maydek/rating-service
     container_name: rating-service
     ports:
       - "4569:4569"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://my_postgres:5432/ratingdb
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ratingdb
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: 123
       SPRING_PROFILES_ACTIVE: "prod"
@@ -106,7 +106,7 @@ services:
       - cab-aggregator
 
   eureka:
-    image: eureka
+    image: maydek/eureka
     container_name: eureka
     ports:
       - "8761:8761"
@@ -114,7 +114,7 @@ services:
       - cab-aggregator
 
   gateway:
-    image: gateway
+    image: maydek/gateway
     container_name: gateway
     ports:
       - "8088:8088"
